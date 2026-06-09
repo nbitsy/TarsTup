@@ -22,7 +22,7 @@ namespace Tup
     /**
      * 通过TUP调用TARS需要使用的包类型
      */
-    internal class TarsUniPacket : UniPacket
+    public class TarsUniPacket : UniPacket
     {
         public TarsUniPacket()
         {

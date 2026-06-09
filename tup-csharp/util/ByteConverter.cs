@@ -21,7 +21,7 @@ using System.Text;
 
 namespace Tup
 {
-    internal class ByteConverter
+    public class ByteConverter
     {
         public static byte[] ReverseBytes(byte[] inArray)
         {

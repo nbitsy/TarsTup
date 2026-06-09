@@ -16,7 +16,7 @@
 
 namespace Tup
 {
-    internal class Const
+    public class Const
     {
         public static string STATUS_GRID_KEY = "STATUS_GRID_KEY";
         public static string STATUS_DYED_KEY = "STATUS_DYED_KEY";
