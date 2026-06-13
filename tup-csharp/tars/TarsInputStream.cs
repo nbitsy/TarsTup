@@ -146,7 +146,11 @@ namespace Tup.Tars
                 while (true)
                 {
                     int len = peakHead(hd);
-                    if (tag <= hd.tag || hd.type == (byte)TarsStructType.STRUCT_END)
+                    if (hd.type == (byte)TarsStructType.STRUCT_END)
+                    {
+                        return false;
+                    }
+                    if (tag <= hd.tag)
                     {
                         return tag == hd.tag;
                     }
@@ -368,7 +372,6 @@ namespace Tup.Tars
                 HeadData hd = new HeadData();
                 readHead(hd);
                 
-
                 switch (hd.type)
                 {
                     case (byte)TarsStructType.ZERO_TAG:
@@ -399,7 +402,8 @@ namespace Tup.Tars
 
         public uint Read(uint n, int tag, bool isRequire)
         {
-            return (uint)Read((long)n, tag, isRequire);
+            // return (uint)Read((long)n, tag, isRequire);
+            return (uint)Read((int)n, tag, isRequire);
         }
 
         public long Read(long n, int tag, bool isRequire)

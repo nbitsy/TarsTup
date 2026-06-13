@@ -192,7 +192,8 @@ namespace Tup.Tars
 
         public void Write(uint n, int tag)
         {
-            Write((long)n, tag);
+            // Write((long)n, tag);
+            Write((int)n, tag);
         }
 
         public void Write(ulong n, int tag)
