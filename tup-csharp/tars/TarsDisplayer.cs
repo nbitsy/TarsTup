@@ -84,6 +84,13 @@ namespace Tup.Tars
             return this;
         }
 
+        public TarsDisplayer Display(ushort n, string fieldName)
+        {
+            ps(fieldName);
+            sb.Append(n).Append('\n');
+            return this;
+        }
+
         public TarsDisplayer Display(int n, string fieldName)
         {
             ps(fieldName);
@@ -91,7 +98,21 @@ namespace Tup.Tars
             return this;
         }
 
+        public TarsDisplayer Display(uint n, string fieldName)
+        {
+            ps(fieldName);
+            sb.Append(n).Append('\n');
+            return this;
+        }
+
         public TarsDisplayer Display(long n, string fieldName)
+        {
+            ps(fieldName);
+            sb.Append(n).Append('\n');
+            return this;
+        }
+
+        public TarsDisplayer Display(ulong n, string fieldName)
         {
             ps(fieldName);
             sb.Append(n).Append('\n');
@@ -196,6 +217,29 @@ namespace Tup.Tars
             return this;
         }
 
+        public TarsDisplayer Display(ushort[] v, string fieldName)
+        {
+            ps(fieldName);
+            if (null == v)
+            {
+                sb.Append("null").Append('\n');
+                return this;
+            }
+            if (v.Length == 0)
+            {
+                sb.Append(v.Length).Append(", []").Append('\n');
+                return this;
+            }
+            sb.Append(v.Length).Append(", [").Append('\n');
+            TarsDisplayer jd = new TarsDisplayer(sb, _level + 1);
+            foreach (ushort o in v)
+            {
+                jd.Display(o, null);
+            }
+            Display(']', null);
+            return this;
+        }
+
         public TarsDisplayer Display(int[] v, string fieldName)
         {
             ps(fieldName);
@@ -217,6 +261,27 @@ namespace Tup.Tars
             return this;
         }
 
+        public TarsDisplayer Display(uint[] v, string fieldName)
+        {
+            ps(fieldName);
+            if (null == v)
+            {
+                sb.Append("null").Append('\n');
+                return this;
+            }
+            if (v.Length == 0)
+            {
+                sb.Append(v.Length).Append(", []").Append('\n');
+                return this;
+            }
+            sb.Append(v.Length).Append(", [").Append('\n');
+            TarsDisplayer jd = new TarsDisplayer(sb, _level + 1);
+            foreach (uint o in v)
+                jd.Display(o, null);
+            Display(']', null);
+            return this;
+        }
+
         public TarsDisplayer Display(long[] v, string fieldName)
         {
             ps(fieldName);
@@ -233,6 +298,29 @@ namespace Tup.Tars
             sb.Append(v.Length).Append(", [").Append('\n');
             TarsDisplayer jd = new TarsDisplayer(sb, _level + 1);
             foreach (long o in v)
+            {
+                jd.Display(o, null);
+            }
+            Display(']', null);
+            return this;
+        }
+
+        public TarsDisplayer Display(ulong[] v, string fieldName)
+        {
+            ps(fieldName);
+            if (null == v)
+            {
+                sb.Append("null").Append('\n');
+                return this;
+            }
+            if (v.Length == 0)
+            {
+                sb.Append(v.Length).Append(", []").Append('\n');
+                return this;
+            }
+            sb.Append(v.Length).Append(", [").Append('\n');
+            TarsDisplayer jd = new TarsDisplayer(sb, _level + 1);
+            foreach (ulong o in v)
             {
                 jd.Display(o, null);
             }
@@ -376,13 +464,25 @@ namespace Tup.Tars
             {
                 Display(((short)oObject), fieldName);
             }
+            else if (o is ushort)
+            {
+                Display(((ushort)oObject), fieldName);
+            }
             else if (o is int)
             {
                 Display(((int)oObject), fieldName);
             }
+            else if (o is uint)
+            {
+                Display(((uint)oObject), fieldName);
+            }
             else if (o is long)
             {
                 Display(((long)oObject), fieldName);
+            }
+            else if (o is ulong)
+            {
+                Display(((ulong)oObject), fieldName);
             }
             else if (o is float)
             {
@@ -412,13 +512,25 @@ namespace Tup.Tars
             {
                 Display((short[])oObject, fieldName);
             }
+            else if (o is ushort[])
+            {
+                Display((ushort[])oObject, fieldName);
+            }
             else if (o is int[])
             {
                 Display((int[])oObject, fieldName);
             }
+            else if (o is uint[])
+            {
+                Display((uint[])oObject, fieldName);
+            }
             else if (o is long[])
             {
                 Display((long[])oObject, fieldName);
+            }
+            else if (o is ulong[])
+            {
+                Display((ulong[])oObject, fieldName);
             }
             else if (o is float[])
             {
@@ -466,5 +578,4 @@ namespace Tup.Tars
             return this;
         }
     }
-
 }
