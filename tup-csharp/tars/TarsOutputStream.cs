@@ -142,7 +142,7 @@ namespace Tup.Tars
         public void Write(short n, int tag)
         {
             reserve(4);
-            if(n>=-128 && n<=127)
+            if (n >= -128 && n <= 127)
             {
                 Write((byte)n, tag);
             }
@@ -330,7 +330,7 @@ namespace Tup.Tars
             }
         }
 
-        public void Write(string s, int tag,bool IsLocalString = false)
+        public void Write(string s, int tag, bool IsLocalString = false)
         {
             byte[] by;
             try
@@ -393,7 +393,7 @@ namespace Tup.Tars
         {
             reserve(8);
             writeHead((byte)TarsStructType.MAP, tag);
-            
+
             Write(m == null ? 0 : m.Count, 0);
             if (m != null)
             {
@@ -455,7 +455,7 @@ namespace Tup.Tars
 
             try
             {
-                if(l != null)
+                if (l != null)
                 {
                     bw.Write(l);
                 }
@@ -485,6 +485,25 @@ namespace Tup.Tars
             }
         }
 
+        public void Write(ushort[] l, int tag)
+        {
+            int nLen = 0;
+            if (l != null)
+            {
+                nLen = l.Length;
+            }
+            reserve(8);
+            writeHead((byte)TarsStructType.LIST, tag);
+            Write(nLen, 0);
+            if (l != null)
+            {
+                foreach (ushort e in l)
+                {
+                    Write(e, 0);
+                }
+            }
+        }
+
         public void Write(int[] l, int tag)
         {
             int nLen = 0;
@@ -498,6 +517,25 @@ namespace Tup.Tars
             if (l != null)
             {
                 foreach (int e in l)
+                {
+                    Write(e, 0);
+                }
+            }
+        }
+
+        public void Write(uint[] l, int tag)
+        {
+            int nLen = 0;
+            if (l != null)
+            {
+                nLen = l.Length;
+            }
+            reserve(8);
+            writeHead((byte)TarsStructType.LIST, tag);
+            Write(nLen, 0);
+            if (l != null)
+            {
+                foreach (uint e in l)
                 {
                     Write(e, 0);
                 }
@@ -518,6 +556,26 @@ namespace Tup.Tars
             if (l != null)
             {
                 foreach (long e in l)
+                {
+                    Write(e, 0);
+                }
+            }
+        }
+
+        public void Write(ulong[] l, int tag)
+        {
+            int nLen = 0;
+            if (l != null)
+            {
+                nLen = l.Length;
+            }
+            reserve(8);
+            writeHead((byte)TarsStructType.LIST, tag);
+            Write(nLen, 0);
+
+            if (l != null)
+            {
+                foreach (ulong e in l)
                 {
                     Write(e, 0);
                 }
@@ -594,10 +652,10 @@ namespace Tup.Tars
         {
             reserve(8);
             writeHead((byte)TarsStructType.LIST, tag);
-            Write(l == null ? 0 : (l.Count>0?l.Count:0), 0);
+            Write(l == null ? 0 : (l.Count > 0 ? l.Count : 0), 0);
             if (l != null)
             {
-                for(int i = 0; i<l.Count; i++)
+                for (int i = 0; i < l.Count; i++)
                 {
                     Write(l[i], 0);
                 }
@@ -637,7 +695,7 @@ namespace Tup.Tars
             }
             else if (o is ushort)
             {
-                Write(((int)(ushort)o), tag);
+                Write((ushort)o, tag);
             }
             else if (o is int)
             {
@@ -645,7 +703,7 @@ namespace Tup.Tars
             }
             else if (o is uint)
             {
-                Write((long)(uint)o, tag);
+                Write((uint)o, tag);
             }
             else if (o is long)
             {
@@ -653,7 +711,7 @@ namespace Tup.Tars
             }
             else if (o is ulong)
             {
-                Write(((long)(ulong)o), tag);
+                Write((long)o, tag);
             }
             else if (o is float)
             {
@@ -684,13 +742,25 @@ namespace Tup.Tars
             {
                 Write((short[])o, tag);
             }
+            else if (o is ushort[])
+            {
+                Write((ushort[])o, tag);
+            }
             else if (o is int[])
             {
                 Write((int[])o, tag);
             }
+            else if (o is uint[])
+            {
+                Write((uint[])o, tag);
+            }
             else if (o is long[])
             {
                 Write((long[])o, tag);
+            }
+            else if (o is ulong[])
+            {
+                Write((ulong[])o, tag);
             }
             else if (o is float[])
             {

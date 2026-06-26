@@ -82,7 +82,7 @@ namespace Tup.Tars
             if (null != this.ms)
             {
                 ms = null;
-                this.ms = new MemoryStream(bs, index, bs.Length-index);
+                this.ms = new MemoryStream(bs, index, bs.Length - index);
                 br = null;
                 br = new BinaryReader(ms);
             }
@@ -102,10 +102,10 @@ namespace Tup.Tars
          */
         public static int readHead(HeadData hd, BinaryReader bb)
         {
-			if(bb.BaseStream.Position >= bb.BaseStream.Length)
-			{
-				throw new TarsDecodeException("read file to end");
-			}
+            if (bb.BaseStream.Position >= bb.BaseStream.Length)
+            {
+                throw new TarsDecodeException("read file to end");
+            }
             byte b = bb.ReadByte();
             hd.type = (byte)(b & 15);
             hd.tag = ((b & (15 << 4)) >> 4);
@@ -371,7 +371,7 @@ namespace Tup.Tars
             {
                 HeadData hd = new HeadData();
                 readHead(hd);
-                
+
                 switch (hd.type)
                 {
                     case (byte)TarsStructType.ZERO_TAG:
@@ -888,6 +888,36 @@ namespace Tup.Tars
             return lr;
         }
 
+        public ushort[] Read(ushort[] l, int tag, bool isRequire)
+        {
+            ushort[] lr = null;
+            if (skipToTag(tag))
+            {
+                HeadData hd = new HeadData();
+                readHead(hd);
+                switch (hd.type)
+                {
+                    case (byte)TarsStructType.LIST:
+                        {
+                            int size = Read(0, 0, true);
+                            if (size < 0)
+                                throw new TarsDecodeException("size invalid: " + size);
+                            lr = new ushort[size];
+                            for (int i = 0; i < size; ++i)
+                                lr[i] = Read(lr[0], 0, true);
+                            break;
+                        }
+                    default:
+                        throw new TarsDecodeException("type mismatch.");
+                }
+            }
+            else if (isRequire)
+            {
+                throw new TarsDecodeException("require field not exist.");
+            }
+            return lr;
+        }
+
         public int[] Read(int[] l, int tag, bool isRequire)
         {
             int[] lr = null;
@@ -918,6 +948,36 @@ namespace Tup.Tars
             return lr;
         }
 
+        public uint[] Read(uint[] l, int tag, bool isRequire)
+        {
+            uint[] lr = null;
+            if (skipToTag(tag))
+            {
+                HeadData hd = new HeadData();
+                readHead(hd);
+                switch (hd.type)
+                {
+                    case (byte)TarsStructType.LIST:
+                        {
+                            int size = Read(0, 0, true);
+                            if (size < 0)
+                                throw new TarsDecodeException("size invalid: " + size);
+                            lr = new uint[size];
+                            for (int i = 0; i < size; ++i)
+                                lr[i] = Read(lr[0], 0, true);
+                            break;
+                        }
+                    default:
+                        throw new TarsDecodeException("type mismatch.");
+                }
+            }
+            else if (isRequire)
+            {
+                throw new TarsDecodeException("require field not exist.");
+            }
+            return lr;
+        }
+
         public long[] Read(long[] l, int tag, bool isRequire)
         {
             long[] lr = null;
@@ -933,6 +993,36 @@ namespace Tup.Tars
                             if (size < 0)
                                 throw new TarsDecodeException("size invalid: " + size);
                             lr = new long[size];
+                            for (int i = 0; i < size; ++i)
+                                lr[i] = Read(lr[0], 0, true);
+                            break;
+                        }
+                    default:
+                        throw new TarsDecodeException("type mismatch.");
+                }
+            }
+            else if (isRequire)
+            {
+                throw new TarsDecodeException("require field not exist.");
+            }
+            return lr;
+        }
+
+        public ulong[] Read(ulong[] l, int tag, bool isRequire)
+        {
+            ulong[] lr = null;
+            if (skipToTag(tag))
+            {
+                HeadData hd = new HeadData();
+                readHead(hd);
+                switch (hd.type)
+                {
+                    case (byte)TarsStructType.LIST:
+                        {
+                            int size = Read(0, 0, true);
+                            if (size < 0)
+                                throw new TarsDecodeException("size invalid: " + size);
+                            lr = new ulong[size];
                             for (int i = 0; i < size; ++i)
                                 lr[i] = Read(lr[0], 0, true);
                             break;
@@ -1140,7 +1230,7 @@ namespace Tup.Tars
             }
             return null;
         }
-        
+
         public TarsStruct directRead(TarsStruct o, int tag, bool isRequire)
         {
             //o必须有一个无参的构造函数
