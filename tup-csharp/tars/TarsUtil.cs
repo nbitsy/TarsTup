@@ -56,12 +56,27 @@ namespace Tup.Tars
             return l == r;
         }
 
+        public static bool Equals(ushort l, ushort r)
+        {
+            return l == r;
+        }
+
         public static bool Equals(int l, int r)
         {
             return l == r;
         }
 
+        public static bool Equals(uint l, uint r)
+        {
+            return l == r;
+        }
+
         public static bool Equals(long l, long r)
+        {
+            return l == r;
+        }
+
+        public static bool Equals(ulong l, ulong r)
         {
             return l == r;
         }
@@ -101,12 +116,27 @@ namespace Tup.Tars
             return l < r ? -1 : (l > r ? 1 : 0);
         }
 
+        public static int compareTo(ushort l, ushort r)
+        {
+            return l < r ? -1 : (l > r ? 1 : 0);
+        }
+
         public static int compareTo(int l, int r)
         {
             return l < r ? -1 : (l > r ? 1 : 0);
         }
 
+        public static int compareTo(uint l, uint r)
+        {
+            return l < r ? -1 : (l > r ? 1 : 0);
+        }
+
         public static int compareTo(long l, long r)
+        {
+            return l < r ? -1 : (l > r ? 1 : 0);
+        }
+
+        public static int compareTo(ulong l, ulong r)
         {
             return l < r ? -1 : (l > r ? 1 : 0);
         }
@@ -205,6 +235,17 @@ namespace Tup.Tars
             return compareTo(l.Length, r.Length);
         }
 
+        public static int compareTo(ushort[] l, ushort[] r)
+        {
+            for (int li = 0, ri = 0; li < l.Length && ri < r.Length; ++li, ++ri)
+            {
+                int n = compareTo(l[li], r[ri]);
+                if (n != 0)
+                    return n;
+            }
+            return compareTo(l.Length, r.Length);
+        }
+
         public static int compareTo(int[] l, int[] r)
         {
             for (int li = 0, ri = 0; li < l.Length && ri < r.Length; ++li, ++ri)
@@ -216,7 +257,29 @@ namespace Tup.Tars
             return compareTo(l.Length, r.Length);
         }
 
+        public static int compareTo(uint[] l, uint[] r)
+        {
+            for (int li = 0, ri = 0; li < l.Length && ri < r.Length; ++li, ++ri)
+            {
+                int n = compareTo(l[li], r[ri]);
+                if (n != 0)
+                    return n;
+            }
+            return compareTo(l.Length, r.Length);
+        }
+
         public static int compareTo(long[] l, long[] r)
+        {
+            for (int li = 0, ri = 0; li < l.Length && ri < r.Length; ++li, ++ri)
+            {
+                int n = compareTo(l[li], r[ri]);
+                if (n != 0)
+                    return n;
+            }
+            return compareTo(l.Length, r.Length);
+        }
+
+        public static int compareTo(ulong[] l, ulong[] r)
         {
             for (int li = 0, ri = 0; li < l.Length && ri < r.Length; ++li, ++ri)
             {
@@ -381,6 +444,27 @@ namespace Tup.Tars
             }
         }
 
+        public static int hashCode(ushort o)
+        {
+            return iTotal * iConstant + o;
+        }
+
+        public static int hashCode(ushort[] array)
+        {
+            if (array == null)
+            {
+                return iTotal * iConstant;
+            }
+            else
+            {
+                int tempTotal = iTotal;
+                for (int i = 0; i < array.Length; i++)
+                {
+                    tempTotal = tempTotal * iConstant + array[i];
+                }
+                return tempTotal;
+            }
+        }
 
         public static int hashCode(int o)
         {
@@ -404,12 +488,56 @@ namespace Tup.Tars
             }
         }
 
+        public static int hashCode(uint o)
+        {
+            return iTotal * iConstant + (int)o;
+        }
+
+        public static int hashCode(uint[] array)
+        {
+            if (array == null)
+            {
+                return iTotal * iConstant;
+            }
+            else
+            {
+                int tempTotal = iTotal;
+                for (int i = 0; i < array.Length; i++)
+                {
+                    tempTotal = tempTotal * iConstant + (int)array[i];
+                }
+                return tempTotal;
+            }
+        }
+
         public static int hashCode(long o)
         {
             return iTotal * iConstant + ((int)(o ^ (o >> 32)));
         }
 
         public static int hashCode(long[] array)
+        {
+            if (array == null)
+            {
+                return iTotal * iConstant;
+            }
+            else
+            {
+                int tempTotal = iTotal;
+                for (int i = 0; i < array.Length; i++)
+                {
+                    tempTotal = tempTotal * iConstant + ((int)(array[i] ^ (array[i] >> 32)));
+                }
+                return tempTotal;
+            }
+        }
+
+        public static int hashCode(ulong o)
+        {
+            return iTotal * iConstant + ((int)(o ^ (o >> 32)));
+        }
+
+        public static int hashCode(ulong[] array)
         {
             if (array == null)
             {
@@ -458,13 +586,25 @@ namespace Tup.Tars
                     {
                         return hashCode((long[])obj);
                     }
+                    if (obj is ulong[])
+                    {
+                        return hashCode((ulong[])obj);
+                    }
                     else if (obj is int[])
                     {
                         return hashCode((int[])obj);
                     }
+                    else if (obj is uint[])
+                    {
+                        return hashCode((uint[])obj);
+                    }
                     else if (obj is short[])
                     {
                         return hashCode((short[])obj);
+                    }
+                    else if (obj is ushort[])
+                    {
+                        return hashCode((ushort[])obj);
                     }
                     else if (obj is char[])
                     {

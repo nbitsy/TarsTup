@@ -1373,13 +1373,25 @@ namespace Tup.Tars
                 {
                     return Read((short[])null, tag, isRequire);
                 }
+                else if (o is ushort[])
+                {
+                    return Read((ushort[])null, tag, isRequire);
+                }
                 else if (o is int[])
                 {
                     return Read((int[])null, tag, isRequire);
                 }
+                else if (o is uint[])
+                {
+                    return Read((uint[])null, tag, isRequire);
+                }
                 else if (o is long[])
                 {
                     return Read((long[])null, tag, isRequire);
+                }
+                else if (o is ulong[])
+                {
+                    return Read((ulong[])null, tag, isRequire);
                 }
                 else if (o is float[])
                 {
