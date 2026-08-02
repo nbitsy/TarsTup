@@ -847,6 +847,22 @@ namespace Tup.Tars
                                 lr[i] = Read(lr[0], 0, true);
                             break;
                         }
+                    case (byte)TarsStructType.STRING1:
+                        {
+                            int len = br.ReadByte();
+                            if (len < 0)
+                                len += 256;
+                            lr = br.ReadBytes(len);
+                            break;
+                        }
+                    case (byte)TarsStructType.STRING4:
+                        {
+                            int len = ByteConverter.ReverseEndian(br.ReadInt32());
+                            if (len > TarsStruct.TARS_MAX_STRING_LENGTH || len < 0)
+                                throw new TarsDecodeException("byte[] too long: " + len);
+                            lr = br.ReadBytes(len);
+                            break;
+                        }
                     default:
                         throw new TarsDecodeException("type mismatch.");
                 }
